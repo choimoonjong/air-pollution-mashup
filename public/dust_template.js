@@ -342,12 +342,14 @@ async function showForecast() {
         return;
     }
 
+    // ★ 첫 번째 예보 선택
     const f = items[0];
 
     document.getElementById("f_time").textContent = f.informData ?? "정보없음";
-    document.getElementById("f_grade").textContent = f.informOverall ?? "정보없음";
+    document.getElementById("f_grade").textContent = f.informGrade ?? "정보없음";
     document.getElementById("f_cause").textContent = f.informCause ?? "정보없음";
 }
+
 
 
 
