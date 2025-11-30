@@ -330,10 +330,19 @@ async function fetchForecastByDate(date) {
 async function showForecast() {
     const today = getCurrentDate();
 
-    const res = await fetch(`/.netlify/functions/forecast?date=${today}`);
-    const json = await res.json();
+    // 오늘 기준 요청
+    let res = await fetch(`/.netlify/functions/forecast?date=${today}`);
+    let json = await res.json();
 
-    const items = json?.response?.body?.items;
+    let items = json?.response?.body?.items;
+
+    // 오늘 데이터가 없으면 → 어제 날짜로 다시 요청
+    if (!items || items.length === 0) {
+        let yesterday = getYesterday();
+        res = await fetch(`/.netlify/functions/forecast?date=${yesterday}`);
+        json = await res.json();
+        items = json?.response?.body?.items;
+    }
 
     if (!items || items.length === 0) {
         document.getElementById("f_time").textContent = "정보없음";
@@ -342,13 +351,26 @@ async function showForecast() {
         return;
     }
 
-    // ★ 첫 번째 예보 선택
     const f = items[0];
 
     document.getElementById("f_time").textContent = f.informData ?? "정보없음";
     document.getElementById("f_grade").textContent = f.informGrade ?? "정보없음";
     document.getElementById("f_cause").textContent = f.informCause ?? "정보없음";
 }
+
+
+// ▼ 어제 날짜 구하는 함수 추가
+function getYesterday() {
+    const d = new Date();
+    d.setDate(d.getDate() - 1);
+
+    const year = d.getFullYear();
+    const month = ("0" + (d.getMonth() + 1)).slice(-2);
+    const day = ("0" + d.getDate()).slice(-2);
+
+    return `${year}-${month}-${day}`;
+}
+
 
 
 
