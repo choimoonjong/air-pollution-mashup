@@ -5,8 +5,8 @@ export const handler = async (event, context) => {
   const serviceKey = process.env.API_KEY;
 
   const url =
-    `http://apis.data.go.kr/B552584/MsrstnInfoInqireSvc/getMsrstnAboveMsrstnList?` +
-    `serviceKey=${serviceKey}&returnType=json&numOfRows=100&pageNo=1&searchDate=${date}`;
+    `http://apis.data.go.kr/B552584/ArpltnInforInqireSvc/getMinuDustFrcstDspth` +
+    `?serviceKey=${serviceKey}&returnType=json&numOfRows=100&pageNo=1&searchDate=${date}`;
 
   try {
     const response = await fetch(url);
