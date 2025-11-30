@@ -1,20 +1,16 @@
 import fetch from "node-fetch";
-import { XMLParser } from "fast-xml-parser";
 
 export const handler = async (event, context) => {
+  const date = event.queryStringParameters.date;
+  const serviceKey = process.env.API_KEY;
+
+  const url =
+    `http://apis.data.go.kr/B552584/MsrstnInfoInqireSvc/getMsrstnAboveMsrstnList?` +
+    `serviceKey=${serviceKey}&returnType=json&numOfRows=100&pageNo=1&searchDate=${date}`;
+
   try {
-    const date = event.queryStringParameters.date;
-    const serviceKey = process.env.API_KEY;
-
-    const url =
-      `http://apis.data.go.kr/B552584/ArpltnInforInqireSvc/getMinuDustFrcstDspth` +
-      `?serviceKey=${serviceKey}&returnType=xml&searchDate=${date}&InformCode=PM10`;
-
-    const res = await fetch(url);
-    const xml = await res.text();
-
-    const parser = new XMLParser();
-    const json = parser.parse(xml);
+    const response = await fetch(url);
+    const json = await response.json();
 
     return {
       statusCode: 200,
