@@ -330,22 +330,29 @@ async function fetchForecastByDate(date) {
 async function showForecast() {
     const today = getCurrentDate();
     const res = await fetch(`/.netlify/functions/forecast?date=${today}`);
-    const json = await res.json();
+    const xmlText = await res.text();   // ★ XML 받기
 
-    const items = json?.response?.body?.items;
+    // XML 파싱
+    const parser = new DOMParser();
+    const xml = parser.parseFromString(xmlText, "text/xml");
 
-    if (!items || items.length === 0) {
+    const item = xml.getElementsByTagName("item")[0];
+
+    if (!item) {
         document.getElementById("f_time").textContent = "정보없음";
         document.getElementById("f_grade").textContent = "정보없음";
         document.getElementById("f_cause").textContent = "정보없음";
         return;
     }
 
-    const f = items[0];
+    document.getElementById("f_time").textContent =
+        item.getElementsByTagName("informData")[0]?.textContent ?? "정보없음";
 
-    document.getElementById("f_time").textContent = f.informData ?? "정보없음";
-    document.getElementById("f_grade").textContent = f.informOverall ?? "정보없음";
-    document.getElementById("f_cause").textContent = f.informCause ?? "정보없음";
+    document.getElementById("f_grade").textContent =
+        item.getElementsByTagName("informOverall")[0]?.textContent ?? "정보없음";
+
+    document.getElementById("f_cause").textContent =
+        item.getElementsByTagName("informCause")[0]?.textContent ?? "정보없음";
 }
 
 
