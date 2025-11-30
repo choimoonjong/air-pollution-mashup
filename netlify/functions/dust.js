@@ -4,7 +4,7 @@ export const handler = async (event, context) => {
 
   const sido = event.queryStringParameters.sido;
 
-  const serviceKey = process.env.AIR_DUST_KEY;
+  const serviceKey = process.env.API_KEY;
 
   const url = 
     `http://apis.data.go.kr/B552584/ArpltnInforInqireSvc/getCtprvnRltmMesureDnsty?` +

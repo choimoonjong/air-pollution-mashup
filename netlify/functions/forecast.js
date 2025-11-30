@@ -4,7 +4,7 @@ export const handler = async (event, context) => {
   
   const date = event.queryStringParameters.date;
 
-  const serviceKey = process.env.AIR_FORECAST_KEY;
+  const serviceKey = process.env.AIR_FORECAT_KEY;
 
   const url =
     `http://apis.data.go.kr/B552584/ArpltnInforInqireSvc/getMinuDustFrcstDspth?` +

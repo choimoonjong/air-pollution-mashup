@@ -314,7 +314,7 @@ async function fetchForecast() {
     const today = getCurrentDate();
 
     try {
-        const res = await fetch(`/api/forecast?date=${today}`);
+        const res = await fetch(`/.netlify/functions/forecast?date=${today}`);
         return await res.text();   // ★ XML로 받음
     } catch (e) {
         console.error("Forecast fetch error:", e);
@@ -323,13 +323,13 @@ async function fetchForecast() {
 }
 
 async function fetchForecastByDate(date) {
-    const res = await fetch(`/api/forecast?date=${date}`);
+    const res = await fetch(`/.netlify/functions/forecast?date=${today}`);
     return await res.text();
 }
 
 async function showForecast() {
     const today = getCurrentDate();
-    const res = await fetch(`/api/forecast?date=${today}`);
+    const res = await fetch(`/.netlify/functions/forecast?date=${today}`);
     const json = await res.json();
 
     const items = json?.response?.body?.items;
