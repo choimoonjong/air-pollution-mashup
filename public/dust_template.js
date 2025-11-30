@@ -333,7 +333,7 @@ async function showForecast() {
     const res = await fetch(`/.netlify/functions/forecast?date=${today}`);
     const json = await res.json();
 
-    const items = json?.response?.body?.items?.item;
+    const items = json?.response?.body?.items;
 
     if (!items || items.length === 0) {
         document.getElementById("f_time").textContent = "정보없음";
