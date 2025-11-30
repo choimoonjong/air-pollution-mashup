@@ -328,12 +328,12 @@ async function fetchForecastByDate(date) {
 }
 
 async function showForecast() {
-    const today = getCurrentDate();  // 오늘 날짜 (2025-12-01)
+    const today = getCurrentDate();
 
     const res = await fetch(`/.netlify/functions/forecast?date=${today}`);
     const json = await res.json();
 
-    const items = json?.response?.body?.items;
+    const items = json?.response?.body?.items?.item;
 
     if (!items || items.length === 0) {
         document.getElementById("f_time").textContent = "정보없음";
@@ -348,6 +348,7 @@ async function showForecast() {
     document.getElementById("f_grade").textContent = f.informOverall ?? "정보없음";
     document.getElementById("f_cause").textContent = f.informCause ?? "정보없음";
 }
+
 
 
 
