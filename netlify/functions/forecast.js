@@ -1,14 +1,14 @@
 import fetch from "node-fetch";
 
 export const handler = async (event, context) => {
+  
+  const date = event.queryStringParameters.date;
 
-  const sido = event.queryStringParameters.sido;
+  const serviceKey = process.env.AIR_FORECAST_KEY;
 
-  const serviceKey = process.env.AIR_DUST_KEY;
-
-  const url = 
-    `http://apis.data.go.kr/B552584/ArpltnInforInqireSvc/getCtprvnRltmMesureDnsty?` +
-    `serviceKey=${serviceKey}&returnType=json&numOfRows=100&pageNo=1&sidoName=${encodeURIComponent(sido)}`;
+  const url =
+    `http://apis.data.go.kr/B552584/ArpltnInforInqireSvc/getMinuDustFrcstDspth?` +
+    `serviceKey=${serviceKey}&returnType=json&informCode=PM10&searchDate=${date}`;
 
   try {
     const response = await fetch(url);
